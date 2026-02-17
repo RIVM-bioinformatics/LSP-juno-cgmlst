@@ -98,7 +98,8 @@ python juno_cgmlst.py \
     -i "$input_dir" \
     -o "$output_dir" \
     -g "$GENUS" \
-    -d "$DB_DIR"
+    -d "$DB_DIR" \
+    --snakemake-args cluster-status=check_lsf_status.py
 
 result=$?
 
