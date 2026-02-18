@@ -93,6 +93,13 @@ DB_DIR="/mnt/db/juno/cgmlst/"
 # Run the pipeline
 echo -e "\nRun pipeline..."
 
+echo "Input dir: ${input_dir}"
+echo "Output dir: ${output_dir}"
+echo "Genus: ${GENUS}"
+echo "Queue: ${QUEUE}"
+echo "DB dir: ${DB_DIR}"
+
+
 python juno_cgmlst.py \
     --queue "$QUEUE" \
     -i "$input_dir" \
