@@ -23,8 +23,12 @@ from bin import download_cgmlst_scheme
 from version import __package_name__, __version__
 
 
-def main() -> None:
-    juno_cgmlst = JunoCgmlst()
+def main(args: list[str] | None = None) -> None:
+
+    if args is not None:
+        juno_cgmlst = JunoCgmlst(args)
+    else:
+        juno_cgmlst = JunoCgmlst()
     juno_cgmlst.run()
 
 
@@ -81,7 +85,6 @@ class JunoCgmlst(Pipeline):
         )
 
     def _parse_args(self) -> argparse.Namespace:
-        print("PARSE ARGS IS BEING RUN!")
         # Remove this if containers can be used with juno-typing
         if "--no-containers" not in self.argv:
             self.argv.append("--no-containers")
@@ -92,7 +95,6 @@ class JunoCgmlst(Pipeline):
         self.downloaded_schemes_dir = self.db_dir.joinpath("downloaded_schemes")
         self.prepared_schemes_dir = self.db_dir.joinpath("prepared_schemes")
         self.metadata_file: Path = args.metadata
-        print(f"all arguments: {args}")
         return args
 
     def set_scheme_in_sample_dict(self) -> None:
