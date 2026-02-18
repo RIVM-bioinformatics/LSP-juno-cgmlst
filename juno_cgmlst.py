@@ -3,22 +3,24 @@ Juno-cgMLST pipeline
 Authors: Alejandra Hernandez-Segura
 Organization: Rijksinstituut voor Volksgezondheid en Milieu (RIVM)
 Department: Infektieziekteonderzoek, Diagnostiek en Laboratorium
-            Surveillance (IDS), Bacteriologie (BPD)     
-Date: 06-05-2022  
+            Surveillance (IDS), Bacteriologie (BPD)
+Date: 06-05-2022
 
 """
 
+import argparse
+import subprocess
+from dataclasses import dataclass
+from pathlib import Path
+
+import yaml
+
 # Dependencies
 from juno_library import Pipeline
-from version import __version__, __package_name__
-import argparse
-from pathlib import Path
-import subprocess
-import yaml
-from dataclasses import dataclass
 
 # Own scripts
 from bin import download_cgmlst_scheme
+from version import __package_name__, __version__
 
 
 def main() -> None:
@@ -79,6 +81,7 @@ class JunoCgmlst(Pipeline):
         )
 
     def _parse_args(self) -> argparse.Namespace:
+        print("PARSE ARGS IS BEING RUN!")
         # Remove this if containers can be used with juno-typing
         if "--no-containers" not in self.argv:
             self.argv.append("--no-containers")
@@ -89,6 +92,7 @@ class JunoCgmlst(Pipeline):
         self.downloaded_schemes_dir = self.db_dir.joinpath("downloaded_schemes")
         self.prepared_schemes_dir = self.db_dir.joinpath("prepared_schemes")
         self.metadata_file: Path = args.metadata
+        print(f"all arguments: {args}")
         return args
 
     def set_scheme_in_sample_dict(self) -> None:
@@ -97,9 +101,9 @@ class JunoCgmlst(Pipeline):
         for sample in self.sample_dict:
             genus = self.sample_dict[sample]["genus"]
             try:
-                self.sample_dict[sample][
-                    "cgmlst_scheme"
-                ] = self.cgmlst_scheme_translation_tbl[genus]
+                self.sample_dict[sample]["cgmlst_scheme"] = (
+                    self.cgmlst_scheme_translation_tbl[genus]
+                )
             except KeyError:
                 self.sample_dict[sample]["cgmlst_scheme"] = ""
 
