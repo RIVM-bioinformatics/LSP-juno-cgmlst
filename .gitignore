@@ -40,3 +40,6 @@ bin/__pycache__
 envs/src/
 
 pkgs_cache/
+
+# Claude Code local settings
+.claude/
