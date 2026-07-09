@@ -35,7 +35,10 @@ conda activate juno_cgmlst
 > often not writable by your user though, so it only works as long as
 > every genus you request is already prepared there; if a genus is
 > missing, the scheme download will fail on the permission error and
-> you'll need to pass `-d <writable_dir>` instead.
+> you'll need to pass `-d <writable_dir>` instead. Read-only access is
+> otherwise fine for allele calling itself: `chewbbaca_per_genus.sh`
+> runs `AlleleCall` with `--no-inferred`, so chewBBACA never writes
+> newly inferred alleles back into the scheme/training files.
 
 ```bash
 python juno_cgmlst.py \
